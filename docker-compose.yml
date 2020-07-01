@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+
+  db-dev:
+    image: postgres:12
+    environment:
+      # POSTGRES_PASSWORD: password
+      POSTGRES_DB: gf_development
+      POSTGRES_HOST_AUTH_METHOD: trust
+      # - POSTGRES_USER=postgres
+      # - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "54320:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+
+  node:
+    image: node
+    volumes:
+      - .:/app
+    working_dir: /app
+
+volumes:
+  db-data:
