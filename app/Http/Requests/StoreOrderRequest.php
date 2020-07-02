@@ -22,9 +22,4 @@ class StoreOrderRequest extends FormRequest
             'order.delivery_day' => 'date',
         ];
     }
-
-    // protected function failedValidation(Validator $validator)
-    // {
-    //     throw new HttpResponseException(response()->json($validator->errors(), 422));
-    // }
 }

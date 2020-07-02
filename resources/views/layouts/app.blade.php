@@ -7,12 +7,12 @@
 
     <title>GF test order</title>
 
-    <script src="{{ asset('js/app.js') }}" defer></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <div id="app" class="container">
         @yield('content')
     </div>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>
