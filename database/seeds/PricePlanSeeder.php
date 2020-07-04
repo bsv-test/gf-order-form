@@ -15,17 +15,17 @@ class PricePlanSeeder extends Seeder
         DB::table('price_plans')->insert([
             [
                 'name' => 'Стандартный',
-                'price_pennies' => 1000_00,
+                'price' => 1000,
                 'delivery_days' => json_encode(range(1, 5))
             ],
             [
                 'name' => 'Выходной',
-                'price_pennies' => 700_00,
-                'delivery_days' => json_encode([6, 7])
+                'price' => 700,
+                'delivery_days' => json_encode([6, 0])
             ],
             [
                 'name' => 'Великолепная среда',
-                'price_pennies' => 500_00,
+                'price' => 500,
                 'delivery_days' => json_encode([3])
             ],
         ]);

@@ -17,15 +17,15 @@ class OrdersControllerTest extends TestCase
 
     public function testStore(): void
     {
-        $user = factory(\App\User::class)->raw();
-        $order = factory(\App\Order::class)->raw();
+        $user = factory(\App\Models\User::class)->raw();
+        $order = factory(\App\Models\Order::class)->raw();
         $response = $this->postJson(route('orders.store'), compact('user', 'order'));
         $response->assertStatus(200);
         $this->assertDatabaseHas('users', $user);
         $this->assertDatabaseHas('orders', $order);
     }
 
-    public function testStoreWithInvalidData(): void
+    public function testStoreRequestWithInvalidData(): void
     {
         $this->postJson(route('orders.store'))
             ->assertStatus(422)

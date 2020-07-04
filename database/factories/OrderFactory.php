@@ -2,16 +2,16 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Order;
-use App\PricePlan;
+use App\Models\Order;
+use App\Models\PricePlan;
 use Faker\Generator as Faker;
 
 $factory->define(Order::class, function (Faker $faker) {
-    $someDayInFuture = now()
-        ->addDays($faker->numberBetween(1, 5))
-        ->format('Y-m-d');
+    $pricePlanId = PricePlan::pluck('id')->random();
+    $pricePlan = PricePlan::find($pricePlanId);
+    $deliveryDate = collect($pricePlan->possible_delivery_dates)->random();
     return [
-        'price_plan_id' => PricePlan::all()->pluck('id')->random(),
-        'delivery_day' => $someDayInFuture
+        'price_plan_id' => $pricePlanId,
+        'delivery_date' => $deliveryDate
     ];
 });

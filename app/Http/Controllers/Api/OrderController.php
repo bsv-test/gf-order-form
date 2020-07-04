@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreOrderRequest;
-use App\Order;
-use App\User;
+use App\Http\Requests\OrderStoreRequest;
+use App\Models\Order;
+use App\Models\User;
 
 class OrderController extends Controller
 {
-    public function store(StoreOrderRequest $request)
+    public function store(OrderStoreRequest $request)
     {
-        $validatedRequestData = $request->validated();
+        $normalizedData = $request->normalized();
 
-        $user = User::firstOrNew(['phone' => $request->input('user.phone')]);
-        $user->fill($validatedRequestData['user']);
+        $user = User::firstOrNew(['phone' => $normalizedData['user']['phone']]);
+        $user->fill($normalizedData['user']);
         if ($user->isDirty()) {
             $user->save();
         }
 
-        $order = new Order($validatedRequestData['order']);
+        $order = new Order($normalizedData['order']);
         $order->user()->associate($user);
         $order->save();
 

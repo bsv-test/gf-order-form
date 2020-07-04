@@ -1929,16 +1929,74 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["currentId"],
+  props: ["priceplans"],
   mounted: function mounted() {
-    console.log("Component mounted.");
+    if (this.priceplans.length) {
+      this.order.price_plan_id = this.priceplans[0].id;
+      this.handlePricePlanChange();
+    }
   },
   data: function data() {
     return {
+      orderedSuccessfully: false,
       user: {
-        phone: ""
+        phone: "+79778603170",
+        name: "Сергей"
       },
+      order: {
+        price_plan_id: "",
+        delivery_date: ""
+      },
+      deliveryDates: [],
       errors: null
     };
   },
@@ -1946,15 +2004,25 @@ __webpack_require__.r(__webpack_exports__);
     formSubmit: function formSubmit(e) {
       var _this = this;
 
-      axios.post("/api/v1/orders", this.form).then(function (response) {
-        console.log(response);
+      this.errors = null;
+      axios.post("/api/v1/orders", {
+        user: this.user,
+        order: this.order
+      }).then(function (response) {
+        _this.orderedSuccessfully = true;
       })["catch"](function (e) {
-        console.log(e.response.data);
-
         if (e.response.status == 422) {
           _this.errors = e.response.data.errors;
         }
       });
+    },
+    handlePricePlanChange: function handlePricePlanChange() {
+      var _this2 = this;
+
+      var pricePlan = this.priceplans.find(function (item) {
+        return item.id == _this2.order.price_plan_id;
+      });
+      this.deliveryDates = pricePlan.possibleDeliveryDateOptions;
     }
   }
 });
@@ -37504,81 +37572,278 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "form",
-    {
-      on: {
-        submit: function($event) {
-          $event.preventDefault()
-          return _vm.formSubmit($event)
-        }
-      }
-    },
-    [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "userPhone" } }, [_vm._v("Телефон")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
+  return _c("div", { staticClass: "card shadow-sm border-primary" }, [
+    _c("div", { staticClass: "card-body p-4" }, [
+      _c("h1", [_vm._v("Закажи сейчас 🍱🥗🍜")]),
+      _vm._v(" "),
+      _vm.orderedSuccessfully
+        ? _c(
+            "div",
+            { staticClass: "alert alert-success", attrs: { role: "alert" } },
+            [_vm._v("Спасибо! Мы приняли ваш заказ!")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.orderedSuccessfully
+        ? _c(
+            "form",
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.user.phone,
-              expression: "user.phone"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "input", name: "user[phone]", id: "userPhone" },
-          domProps: { value: _vm.user.phone },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.formSubmit($event)
+                }
               }
-              _vm.$set(_vm.user, "phone", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm.errors
-          ? _c(
-              "ul",
-              { staticClass: "list-unstyled" },
-              _vm._l(_vm.errors["user.phone"], function(error) {
-                return _c("li", { staticClass: "allert alert-danger p-1" }, [
-                  _vm._v(_vm._s(error))
-                ])
-              }),
-              0
-            )
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "userName" } }, [_vm._v("Имя")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "input", name: "user[name]", id: "userName" }
-        }),
-        _vm._v(" "),
-        _vm.errors
-          ? _c(
-              "ul",
-              { staticClass: "list-unstyled" },
-              _vm._l(_vm.errors["user.name"], function(error) {
-                return _c("li", { staticClass: "allert alert-danger p-1" }, [
-                  _vm._v(_vm._s(error))
-                ])
-              }),
-              0
-            )
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-primary" }, [_vm._v("Заказать")])
-    ]
-  )
+            },
+            [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "userPhone" } }, [
+                  _vm._v("Телефон")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.user.phone,
+                      expression: "user.phone"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "input", id: "userPhone" },
+                  domProps: { value: _vm.user.phone },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.user, "phone", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors
+                  ? _c(
+                      "ul",
+                      { staticClass: "list-unstyled" },
+                      _vm._l(_vm.errors["user.phone"], function(error) {
+                        return _c(
+                          "li",
+                          { staticClass: "allert alert-danger p-1" },
+                          [_vm._v(_vm._s(error))]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "userName" } }, [_vm._v("Имя")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.user.name,
+                      expression: "user.name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "input", id: "userName" },
+                  domProps: { value: _vm.user.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.user, "name", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors
+                  ? _c(
+                      "ul",
+                      { staticClass: "list-unstyled" },
+                      _vm._l(_vm.errors["user.name"], function(error) {
+                        return _c(
+                          "li",
+                          { staticClass: "allert alert-danger p-1" },
+                          [_vm._v(_vm._s(error))]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "d-block" }, [_vm._v("Тариф")]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "btn-group-vertical btn-group-toggle" },
+                  _vm._l(_vm.priceplans, function(priceplan) {
+                    return _c(
+                      "label",
+                      {
+                        staticClass: "btn btn-outline-dark text-left",
+                        class:
+                          _vm.order.price_plan_id === priceplan.id
+                            ? "active"
+                            : "",
+                        on: { change: _vm.handlePricePlanChange }
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.order.price_plan_id,
+                              expression: "order.price_plan_id"
+                            }
+                          ],
+                          attrs: { type: "radio" },
+                          domProps: {
+                            value: priceplan.id,
+                            checked: _vm._q(
+                              _vm.order.price_plan_id,
+                              priceplan.id
+                            )
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.$set(
+                                _vm.order,
+                                "price_plan_id",
+                                priceplan.id
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(priceplan.name) +
+                            " (дни доставки: " +
+                            _vm._s(priceplan.deliveryDaysPresented) +
+                            ") – " +
+                            _vm._s(priceplan.price) +
+                            " ₽\n          "
+                        )
+                      ]
+                    )
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _vm.errors
+                  ? _c(
+                      "ul",
+                      { staticClass: "list-unstyled" },
+                      _vm._l(_vm.errors["order.price_plan_id"], function(
+                        error
+                      ) {
+                        return _c(
+                          "li",
+                          { staticClass: "alert alert-danger p-1" },
+                          [_vm._v(_vm._s(error))]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "d-block" }, [
+                  _vm._v("Дата первой доставки")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "btn-group-vertical btn-group-toggle" },
+                  _vm._l(_vm.deliveryDates, function(
+                    deliveryDateLabel,
+                    deliveryDate
+                  ) {
+                    return _c(
+                      "label",
+                      {
+                        staticClass: "btn btn-outline-dark",
+                        class:
+                          _vm.order.delivery_date === deliveryDate
+                            ? "active"
+                            : ""
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.order.delivery_date,
+                              expression: "order.delivery_date"
+                            }
+                          ],
+                          attrs: { type: "radio" },
+                          domProps: {
+                            value: deliveryDate,
+                            checked: _vm._q(
+                              _vm.order.delivery_date,
+                              deliveryDate
+                            )
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.$set(
+                                _vm.order,
+                                "delivery_date",
+                                deliveryDate
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(deliveryDateLabel) +
+                            "\n          "
+                        )
+                      ]
+                    )
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _vm.errors
+                  ? _c(
+                      "ul",
+                      { staticClass: "list-unstyled" },
+                      _vm._l(_vm.errors["order.delivery_date"], function(
+                        error
+                      ) {
+                        return _c(
+                          "li",
+                          { staticClass: "alert alert-danger p-1" },
+                          [_vm._v(_vm._s(error))]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("button", { staticClass: "btn btn-primary btn-block" }, [
+                _vm._v("Заказать")
+              ])
+            ]
+          )
+        : _vm._e()
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
