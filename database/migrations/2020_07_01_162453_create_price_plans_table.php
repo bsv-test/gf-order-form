@@ -16,7 +16,7 @@ class CreatePricePlansTable extends Migration
         Schema::create('price_plans', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedInteger('price_pennies');
+            $table->unsignedInteger('price');
             $table->json('delivery_days');
             $table->timestamps();
         });

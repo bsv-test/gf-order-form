@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
-use App\PricePlan;
-use App\User;
-use Illuminate\Http\Request;
+use App\Models\PricePlan;
 
 class OrderController extends Controller
 {
     public function create()
     {
-        $pricePlans = PricePlan::get();
+        $pricePlans = (new PricePlan())->presentAll();
         return view('orders.create', compact('pricePlans'));
     }
 }

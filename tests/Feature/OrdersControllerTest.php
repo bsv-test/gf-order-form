@@ -8,11 +8,14 @@ use Tests\TestCase;
 
 class OrdersControllerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
+    use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->seed();
+    }
+
     public function testCreate()
     {
         $response = $this->get(route('orders.create'));
