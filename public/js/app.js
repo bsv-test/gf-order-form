@@ -1989,8 +1989,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       orderedSuccessfully: false,
       user: {
-        phone: "+79778603170",
-        name: "Сергей"
+        phone: "",
+        name: ""
       },
       order: {
         price_plan_id: "",
