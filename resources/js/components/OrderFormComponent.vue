@@ -81,7 +81,7 @@ export default {
   data() {
     return {
       orderedSuccessfully: false,
-      user: { phone: "+79778603170", name: "Сергей" },
+      user: { phone: "", name: "" },
       order: { price_plan_id: "", delivery_date: "" },
       deliveryDates: [],
       errors: null
